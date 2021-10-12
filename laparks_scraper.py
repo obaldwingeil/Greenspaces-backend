@@ -43,7 +43,7 @@ def get_easy_data(location_type, url):
             for address in row.findAll('td', {'class': 'views-field-field-address'}):
                 location['address'] = re.sub('\s+', ' ', address.text).strip()
             if location:
-                location['location_id'] = uuid.uuid1().int >> 64
+                location['location_id'] = uuid.uuid1().int >> 68
                 location['type'] = location_type
                 locations.append(location)
 
@@ -79,8 +79,11 @@ def get_easy_data(location_type, url):
                 # print(location)
                 # get images
                 for image in item_content.findAll('a', {'class': 'colorbox'}):
-                    images.append({'url': image['href'], 'location_id': location['location_id']})
+                    if image['href'] != 'https://www.laparks.org/sites/default/files/default_images/default.jpg':
+                        images.append({'url': image['href'], 'location_id': location['location_id']})
                 # print(images)
+                from time import sleep
+                sleep(0.07)
         return [locations, images]
 
 

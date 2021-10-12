@@ -52,9 +52,11 @@ def get_golf_courses():
                         'link': "http://golf.lacity.org" + name['href'],
                         'type': 'golf course',
                         'features': course_type[:len(course_type)-1].replace('\n', '').strip() + ', ',
-                        'location_id': uuid.uuid4()
+                        'location_id': uuid.uuid1().int >> 68
                     }
                     courses.append(location)
+            from time import sleep
+            sleep(0.07)
 
         for location in courses:
             item_html = simple_get(location['link'])

@@ -66,12 +66,14 @@ def get_national_parks():
             'seasonal': n_park['operatingHours'][0]['description'],
             'hours': ', '.join(': '.join((key,  val)) for (key, val) in n_park['operatingHours'][0]['standardHours'].items()),
             'weather': n_park['weatherInfo'],
-            'location_id': uuid.uuid4()
+            'location_id': uuid.uuid1().int >> 68
         }
         national_parks.append(park)
 
         for image in n_park['images']:
-            images.append({'url': image['url'], 'location_id': park['location_id']})
+            image_obj = {'url': image['url'], 'location_id': park['location_id']}
+            if image_obj not in images:
+                images.append(image_obj)
     return [national_parks, images]
 
 
@@ -108,7 +110,7 @@ def get_campgrounds():
             'seasonal': seasonal,
             'hours': hours,
             'weather': cg['weatherOverview'].replace('<a href="', 'weather forecast: ').replace('</a>', '').replace('">weather forecast', ''),
-            'location_id': uuid.uuid4(),
+            'location_id': uuid.uuid1().int >> 68,
             'accessibility': get_accessibility(cg['accessibility']),
 
         }
@@ -116,7 +118,9 @@ def get_campgrounds():
         campgrounds.append(campground)
 
         for image in cg['images']:
-            images.append({'url': image['url'], 'location_id': campground['location_id']})
+            image_obj = {'url': image['url'], 'location_id': campground['location_id']}
+            if image_obj not in images:
+                images.append(image_obj)
 
     return [campgrounds, images]
 
