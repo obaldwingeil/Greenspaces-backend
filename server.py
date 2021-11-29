@@ -1,4 +1,4 @@
-from peewee import Model, IntegerField, TextField, MySQLDatabase
+from peewee import Model, IntegerField, TextField, MySQLDatabase, DoubleField
 
 mysql_db = MySQLDatabase('green_spaces', user='root', password='My122096!!', host='localhost', port=3306)
 
@@ -26,6 +26,9 @@ class Location(Base):
     hours = TextField(null=True)
     weather = TextField(null=True)
     reservations = TextField(null=True)
+    rating = DoubleField(null=True)
+    lat = DoubleField(null=True)
+    long = DoubleField(null=True)
 
     class Meta:
         table_name = 'locations'
@@ -45,10 +48,23 @@ class User(Base):
     user_id = IntegerField(primary_key=True, null=False, index=True)
     name = TextField(null=True)
     email = TextField(null=True)
-    password = TextField(null=True)
+    locations = TextField(null=True)
 
     class Meta:
         table_name = 'users'
+
+
+class Review(Base):
+    review_id = IntegerField(primary_key=True, null=False, index=True)
+    user_id = IntegerField(null=True)
+    location_id = IntegerField(null=True)
+    description = IntegerField(null=True)
+    rating = DoubleField(null=True)
+    user_name = TextField(null=True)
+    location_name = TextField(null=True)
+
+    class Meta:
+        table_name = 'reviews'
 
 
 mysql_db.connect()

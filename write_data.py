@@ -1,5 +1,6 @@
 from server import Location, User, Image
 import peewee as pw
+import geojson
 
 '''
 test_location = Location.create(
@@ -55,7 +56,18 @@ def post_national_parks():
     post_data(national_parks_api.get_campgrounds())
 
 
+def add_lat_lon():
+    with open('locations.geojson') as f:
+        gj = geojson.load(f)
+        features = gj['features']
+        for feature in features:
+            lat_lon = {Location.lat: feature['geometry']['coordinates'][1], Location.long: feature['geometry']['coordinates'][0]}
+            query = Location.update(lat_lon).where(Location.location_id == feature['properties']['location_id'])
+            query.execute()
+
+
 if __name__ == "__main__":
     # post_la_parks()
     # post_la_golf()
-    post_national_parks()
+    # post_national_parks()
+    add_lat_lon()
