@@ -1,1 +1,1 @@
-web: gunicorn read_data.py:app --log-file=-
+web: gunicorn read_data:app --log-file=-
