@@ -1,7 +1,7 @@
 from peewee import NodeList, SQL, fn
 from playhouse.shortcuts import model_to_dict
 
-from server import mysql_db, Location, User, Image, Review
+from server import Location, User, Image, Review
 from flask import Flask, jsonify, request
 import math
 import json

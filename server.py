@@ -1,6 +1,6 @@
 from peewee import Model, IntegerField, TextField, MySQLDatabase, DoubleField
 
-mysql_db = MySQLDatabase('green_spaces', user='root', password='My122096!!', host='localhost', port=3306)
+mysql_db = MySQLDatabase('green_spaces', user='root', password='My122096!!', host='0.0.0.0', port=3306)
 
 
 class Base(Model):
