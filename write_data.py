@@ -2,20 +2,8 @@ from server import Location, User, Image
 import peewee as pw
 import geojson
 
-'''
-test_location = Location.create(
-    location_id=1,
-    name='test location uploaded from python orm',
-)
-
-test_location.save()
-'''
-
 
 def post_data(array):
-    '''locations = []
-    for location in Location.select():
-        locations.append(location.name)'''
 
     images = []
     for image in Image.select():
@@ -29,6 +17,15 @@ def post_data(array):
         print(image['url'])
         if image['url'] not in images:
             Image.create(**image)
+
+
+def update_data(array):
+    for location in array[0]:
+        query = (Location
+                 .update({Location.seasonal: (location['seasonal'])})
+                 .where(Location.name == location['name']))
+        query.execute()
+        print(location['name'])
 
 
 def post_la_parks():
@@ -67,7 +64,10 @@ def add_lat_lon():
 
 
 if __name__ == "__main__":
+    import national_parks_api
     # post_la_parks()
     # post_la_golf()
     # post_national_parks()
-    add_lat_lon()
+    # add_lat_lon()
+    # update_data(national_parks_api.get_national_parks())
+    # update_data(national_parks_api.get_campgrounds())

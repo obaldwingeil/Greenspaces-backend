@@ -193,7 +193,10 @@ def filtered_location_endpoint():
         filter_list = []
 
     user = model_to_dict(User.get(user_id=user_id))
-    saved_locations = user['locations'].split(", ")
+    if user['locations'] is not None:
+        saved_locations = user['locations'].split(", ")
+    else:
+        saved_locations = []
 
     if len(search_query) != 0 and saved:
         query = Location.select().where(
@@ -370,7 +373,11 @@ def image_by_location_saved(location_id, user_id):
 
     user = model_to_dict(User.get(user_id=user_id))
     locations = user['locations']
-    saved = str(location_id) in locations
+
+    if locations is not None:
+        saved = str(location_id) in locations
+    else:
+        saved = False
 
     location = model_to_dict(Location.get(location_id=location_id))
     rating = location['rating']
