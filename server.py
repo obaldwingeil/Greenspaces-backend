@@ -1,5 +1,6 @@
 from peewee import Model, IntegerField, TextField, MySQLDatabase, DoubleField
 
+# insert your MySQL credentials here
 mysql_db = MySQLDatabase('green_spaces', user='open', password='Ro122096!!', host='134.69.212.136', port=3306)
 
 

@@ -6,29 +6,6 @@ from flask import Flask, jsonify, request
 import math
 import json
 
-# Methods for testing data inserting
-'''for location in Location.select():
-    print(location.name + ': ' + str(location.location_id))
-    for image in Image.select().where(Image.location_id == location.location_id):
-        print('\t' + image.url)
-
-for user in User.select():
-    print(user.name + ': ' + str(user.user_id))
-
-for image in Image.select().where(Image.url == 'https://www.laparks.org/sites/default/files/facility/105th-street-pocket-park/images/105th1.jpg'):
-    print(image.location_id)
-
-for image in Image.select():
-    print(str(image.location_id) + ': ' + image.url)
-    for location in Location.select().where(Location.location_id == image.location_id):
-        print(location.name)
-
-for location in Location.select().where(Location.type == 'campground'):
-    print(location.name + ': ' + str(location.location_id))
-    for image in Image.select().where(Image.location_id == location.location_id):
-        print('\t' + image.url)'''
-
-
 allTypes = ["golf course", "city park", "national park", "open water facility", "beach",
             "campground", "pool", "garden", "dog park"]
 
@@ -52,7 +29,6 @@ def getFeatures():
         if location.activities:
             for feature in location.activities.split(', '):
                 if feature not in features:
-                    print(feature)
                     features.append(feature)
 
 
@@ -249,7 +225,6 @@ def filtered_location_endpoint():
 
         if has_features:
             filtered_data.append(location)
-            # print(location["name"] + ": " + str(features) + " -- " + str(activities))
 
     user = model_to_dict(User.get(user_id=user_id))
     saved_locations = user['locations']
@@ -573,7 +548,6 @@ def post_review():
     # Update Location average
     reviews = Review.select().where(Review.location_id == location_id)
     review_count = len(reviews)
-    print(review_count)
     location_query = (Location
                       .update({Location.rating: (((review_count * Location.rating) + rating) / review_count)})
                       .where(Location.location_id == location_id))
@@ -599,7 +573,6 @@ def post_review():
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5001)
-    # getFeatures()
 
     ''' TEST for distance_sort()
     test_locations = [
@@ -609,5 +582,27 @@ if __name__ == '__main__':
 
     test_point = [34.12593743565167, -118.21927507263004]
     print(sorted(test_locations, key=lambda location: distance_sort(location, test_point)))'''
+
+    # Methods for testing data inserting
+    '''for location in Location.select():
+        print(location.name + ': ' + str(location.location_id))
+        for image in Image.select().where(Image.location_id == location.location_id):
+            print('\t' + image.url)
+
+    for user in User.select():
+        print(user.name + ': ' + str(user.user_id))
+
+    for image in Image.select().where(Image.url == 'https://www.laparks.org/sites/default/files/facility/105th-street-pocket-park/images/105th1.jpg'):
+        print(image.location_id)
+
+    for image in Image.select():
+        print(str(image.location_id) + ': ' + image.url)
+        for location in Location.select().where(Location.location_id == image.location_id):
+            print(location.name)
+
+    for location in Location.select().where(Location.type == 'campground'):
+        print(location.name + ': ' + str(location.location_id))
+        for image in Image.select().where(Image.location_id == location.location_id):
+            print('\t' + image.url)'''
 
 

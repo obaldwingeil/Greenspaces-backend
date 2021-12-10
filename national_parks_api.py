@@ -45,7 +45,6 @@ def get_national_parks():
     national_parks = []
     images = []
     api_response = get("https://developer.nps.gov/api/v1/parks?stateCode=CA&limit=1000&api_key=GPXBhNzPUkbLHnn9h8f4cargTtaCrfkCdhgnX7sr").json()['data']
-    # print(api_response)
 
     for n_park in api_response:
         activities_json = n_park['activities']
@@ -114,7 +113,6 @@ def get_campgrounds():
             'accessibility': get_accessibility(cg['accessibility']),
 
         }
-        # print(campground)
         campgrounds.append(campground)
 
         for image in cg['images']:
